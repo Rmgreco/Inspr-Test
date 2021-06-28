@@ -6,10 +6,6 @@ import Form from '../components/Form';
 function ListPage() {
   const [itemsList, setItemsList] = useState([]);
   const inLocalStorage = JSON.parse(localStorage.getItem('list'));
-  if (!inLocalStorage){
-    localStorage.setItem('list', JSON.stringify(''));
-  }
-
 
   function onAddItem(newItem) { 
     setItemsList([...itemsList, newItem])
