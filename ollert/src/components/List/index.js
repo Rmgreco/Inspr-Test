@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function List (props) {
     const inLocalStorage = JSON.parse(localStorage.getItem('list'));
@@ -12,7 +13,9 @@ function List (props) {
       }
   return(
     <ul className="todo-list" >
-      {inLocalStorage.map(item => (<li>{item}</li> ))}
+      {inLocalStorage.map(item => 
+        (<li key={item}><Link to = {`/list/${item}`}>{item}</Link></li> )
+        )}
     </ul>
   )
 }

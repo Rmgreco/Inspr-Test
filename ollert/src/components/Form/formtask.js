@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Form(props) {
+function FormTask(props) {
   const [task, setTask] = useState("");
   
   function handleInputTask(event) {
@@ -12,7 +12,7 @@ function Form(props) {
     event.preventDefault();
     
     if(task) {
-      props.onAddItem(task)
+      props.onAddTask(task)
       setTask("");
     }
   }
@@ -25,4 +25,4 @@ function Form(props) {
   )
 }
 
-export default Form;
+export default FormTask;

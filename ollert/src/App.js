@@ -1,14 +1,17 @@
 import React from 'react';
 import ListPage from './pages/ListPage';
-import Header from './components/header'
+import TaskPage from './pages/TaskPage';
 import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="todo-wrapper">
-      <Header />
-      <ListPage />
-    </div>
+    <BrowserRouter>
+      <Switch>
+      <Route exact path="/" render={ (props) => <ListPage {...props}/> } />
+      <Route exact path="/list/:item" render={ (props) => <TaskPage {...props}/> } />
+      </Switch>
+    </BrowserRouter>
   );
 }
 

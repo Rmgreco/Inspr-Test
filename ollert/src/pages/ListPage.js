@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import List from '../components/List';
 import Form from '../components/Form';
+import Header from '../components/header'
 
 
 function ListPage() {
   const [itemsList, setItemsList] = useState([]);
   const inLocalStorage = JSON.parse(localStorage.getItem('list'));
+  if (!inLocalStorage){
+    localStorage.setItem('list', JSON.stringify(''));
+  }
 
   function onAddItem(newItem) { 
     setItemsList([...itemsList, newItem])
@@ -14,7 +18,8 @@ function ListPage() {
 
   return (
     <div className="todo-wrapper">
-      <h1>ToDo List</h1>
+      <Header />
+      <h1>Add List</h1>
       <Form onAddItem={onAddItem}/>
 
       <List itemsList={itemsList} /> 
