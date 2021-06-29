@@ -3,13 +3,13 @@ import React from 'react';
 import TodoItemTask from './TodoItemTask'
 import '../App.css';
 
-const TodoList = ({ todoItems, onRemoveTodo, onToggleTodoDone }) => (
+const TodoList = ({ todoItems, onRemoveTodo, onToggleTodoDone, onToggleTodoNotStarted, onToggleTodoClosed }) => (
   <ul >
     {
       todoItems && 
       Array.isArray(todoItems) && 
       todoItems.map(({ id, todo, description, priority,
-        deadline, time_estimated, image, labels, indicators, isDone }) => ( 
+        deadline, time_estimated, image, labels, indicators, isDone, notStarted, closed }) => ( 
         <TodoItemTask
           key={id}
           id={id}
@@ -24,6 +24,10 @@ const TodoList = ({ todoItems, onRemoveTodo, onToggleTodoDone }) => (
           onRemoveTodo={onRemoveTodo}
           onToggleTodoDone={onToggleTodoDone}
           isDone={isDone}
+          onToggleTodoNotStarted={onToggleTodoNotStarted}
+          notStarted={notStarted}
+          onToggleTodoClosed={onToggleTodoClosed}
+          closed={closed}
         />
       ))
     }

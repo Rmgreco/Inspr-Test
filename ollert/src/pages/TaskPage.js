@@ -54,11 +54,29 @@ const TaskPage = () => {
     const toggleTodoDoneHandler = useCallback((id, path) => {
         const todo = todoItems.find(todoItem => todoItem.id === id)
         todo.isDone = !todo.isDone
-    
+
         setTodoItems([...todoItems])
         saveInLocalStorage(`${path}-task`, todoItems)
-    
-      }, [todoItems])
+
+    }, [todoItems])
+
+    const toggleTodoNotStartedHandler = useCallback((id, path) => {
+        const todo = todoItems.find(todoItem => todoItem.id === id)
+        todo.notStarted = !todo.notStarted
+
+        setTodoItems([...todoItems])
+        saveInLocalStorage(`${path}-task`, todoItems)
+
+    }, [todoItems])
+
+    const toggleTodoClosedHandler = useCallback((id, path) => {
+        const todo = todoItems.find(todoItem => todoItem.id === id)
+        todo.closed = !todo.closed
+
+        setTodoItems([...todoItems])
+        saveInLocalStorage(`${path}-task`, todoItems)
+
+    }, [todoItems])
 
     return (
         <div className="todo">
@@ -71,6 +89,8 @@ const TaskPage = () => {
                 todoItems={todoItems}
                 onRemoveTodo={removeTodoHandler}
                 onToggleTodoDone={toggleTodoDoneHandler}
+                onToggleTodoNotStarted={toggleTodoNotStartedHandler}
+                onToggleTodoClosed={toggleTodoClosedHandler}
             />
         </div>
     );
