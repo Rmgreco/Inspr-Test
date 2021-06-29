@@ -14,7 +14,7 @@ const TaskPage = () => {
     const [todoItems, setTodoItems] = useState(getFromLocalStorage(`${path}-task`) || [])
 
     const addTodoHandler = useCallback((todo, description, priority,
-        deadline, time_estimated, image, labels, indicators) => {
+        deadline, time_estimated, image, labels, indicators, path) => {
         let latestTodoItem = null
         if (todoItems.length === 1) {
             latestTodoItem = todoItems[0]
@@ -43,7 +43,7 @@ const TaskPage = () => {
         saveInLocalStorage(`${path}-task`, newTaskItems)
     }, [todoItems])
 
-    const removeTodoHandler = useCallback(id => {
+    const removeTodoHandler = useCallback((id, path) => {
         const newTaskItems = todoItems.filter(todoItem => todoItem.id !== id)
 
         setTodoItems(newTaskItems)
@@ -51,13 +51,11 @@ const TaskPage = () => {
         saveInLocalStorage(`${path}-task`, newTaskItems)
     }, [todoItems])
 
-    const toggleTodoDoneHandler = useCallback(id => {
+    const toggleTodoDoneHandler = useCallback((id, path) => {
         const todo = todoItems.find(todoItem => todoItem.id === id)
         todo.isDone = !todo.isDone
     
         setTodoItems([...todoItems])
-    
-        // Save to localStorage
         saveInLocalStorage(`${path}-task`, todoItems)
     
       }, [todoItems])
