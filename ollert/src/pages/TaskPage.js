@@ -1,32 +1,81 @@
-import React, { useState } from 'react';
-import ListTask from '../components/List/listTask';
-import Form from '../components/Form';
+import React, { useState, useCallback } from 'react'
 import Header from '../components/header'
 
+import TodoTask from '../components/TodoTask';
+import AddNewTaskForm from '../components/AddNewTaskForm';
 
-function TaskPage() {
-const pathname = window.location.pathname;
-const path = pathname.split('/')[2];
-  const [itemsList, setItemsList] = useState([]);
-  const inLocalStorage = JSON.parse(localStorage.getItem(`${path}-task`));
-  if (!inLocalStorage) {
-    localStorage.setItem(`${path}-task`, JSON.stringify(''));
-}
+import { getFromLocalStorage, saveInLocalStorage } from '../helpers'
+import '../App.css';
 
-  function onAddTask(newItem) { 
-    setItemsList([...itemsList, newItem])
-    localStorage.setItem(`${path}-task`, JSON.stringify([...inLocalStorage, newItem]));
-  }
 
-  return (
-    <div>
-      <Header />
-      <h1>Add Task</h1>
-      <Form onAddItem={onAddTask}/>
+const TaskPage = () => {
+    const pathname = window.location.pathname;
+    const path = pathname.split('/')[2];
+    const [todoItems, setTodoItems] = useState(getFromLocalStorage(`${path}-task`) || [])
 
-      <ListTask itemsList={itemsList} /> 
-    </div>
-  );
+    const addTodoHandler = useCallback((todo, description, priority,
+        deadline, time_estimated, image, labels, indicators) => {
+        let latestTodoItem = null
+        if (todoItems.length === 1) {
+            latestTodoItem = todoItems[0]
+        }
+
+        else if (todoItems.length > 1) {
+            const todoItemsDescendingSortedById = todoItems.sort((a, b) => a.id > b.id)
+            latestTodoItem = todoItemsDescendingSortedById[0]
+        }
+
+        const newTaskItems = [
+            {
+                id: latestTodoItem ? latestTodoItem.id + 1 : 0,
+                todo,
+                description,
+                priority,
+                deadline,
+                time_estimated,
+                image,
+                labels,
+                indicators
+            },
+            ...todoItems,
+        ]
+        setTodoItems(newTaskItems)
+        saveInLocalStorage(`${path}-task`, newTaskItems)
+    }, [todoItems])
+
+    const removeTodoHandler = useCallback(id => {
+        const newTaskItems = todoItems.filter(todoItem => todoItem.id !== id)
+
+        setTodoItems(newTaskItems)
+
+        saveInLocalStorage(`${path}-task`, newTaskItems)
+    }, [todoItems])
+
+    const toggleTodoDoneHandler = useCallback(id => {
+        const todo = todoItems.find(todoItem => todoItem.id === id)
+        todo.isDone = !todo.isDone
+    
+        setTodoItems([...todoItems])
+    
+        // Save to localStorage
+        saveInLocalStorage(`${path}-task`, todoItems)
+    
+      }, [todoItems])
+
+    return (
+        <div className="todo">
+            <Header />
+            <h1>{path} Tasks</h1>
+            <AddNewTaskForm
+                onAddTask={addTodoHandler}
+            />
+            <TodoTask
+                todoItems={todoItems}
+                onRemoveTodo={removeTodoHandler}
+                onToggleTodoDone={toggleTodoDoneHandler}
+            />
+        </div>
+    );
 }
 
 export default TaskPage;

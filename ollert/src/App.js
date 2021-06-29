@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <Switch>
       <Route exact path="/" render={ (props) => <ListPage {...props}/> } />
-      <Route exact path="/list/:item" render={ (props) => <TaskPage {...props}/> } />
+      <Route exact path="/list/:todo" render={ (props) => <TaskPage {...props}/> } />
       </Switch>
     </BrowserRouter>
   );
