@@ -1,4 +1,7 @@
-
+/* body{
+  background-color: black;
+  color: white;
+} */
 
 .header {
   align-items: center;
@@ -18,7 +21,8 @@
 }
 
 .li{
-  background-color: ghostwhite
+  background-color: ghostwhite;
+  padding-left: 5px;
   }
 
 .form{
@@ -44,3 +48,7 @@ color: black;
 /* .inputs{
   margin: 10px;
 } */
+
+.crud{
+  margin: 5px;
+}

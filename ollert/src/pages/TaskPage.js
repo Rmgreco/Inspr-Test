@@ -11,11 +11,12 @@ import '../App.css';
 const TaskPage = () => {
     const pathname = window.location.pathname;
     const path = pathname.split('/')[2];
+    const pathTitle = path.replace("%20", " ")
     console.log(path);
     const [todoItems, setTodoItems] = useState(getFromLocalStorage(`${path}-task`) || [])
 
     const addTodoHandler = useCallback((todo, description, priority,
-        deadline, time_estimated, image, labels, indicators) => {
+        deadline, time_estimated, image, labels, indicators, linked, blocked) => {
         let latestTodoItem = null
         if (todoItems.length === 1) {
             latestTodoItem = todoItems[0]
@@ -37,6 +38,8 @@ const TaskPage = () => {
                 image,
                 labels,
                 indicators,
+                linked,
+                blocked
             },
             ...todoItems,
         ]
@@ -81,10 +84,28 @@ const TaskPage = () => {
 
     }, [todoItems])
 
+    const editLinked = useCallback((id, linked) => {
+        const editingLinked = todoItems.find(todoItem => todoItem.id === id)
+        editingLinked.linked = linked
+        setTodoItems([...todoItems])
+
+        saveInLocalStorage(`${path}-task`, todoItems)
+    
+      }, [todoItems])
+
+      const editBlocked = useCallback((id, blocked) => {
+        const editingBlocked = todoItems.find(todoItem => todoItem.id === id)
+        editingBlocked.blocked = blocked
+        setTodoItems([...todoItems])
+
+        saveInLocalStorage(`${path}-task`, todoItems)
+    
+      }, [todoItems])
+
     return (
         <div className="todo">
             <Header />
-            <h1>{path} Tasks</h1>
+            <h1>{pathTitle} Tasks</h1>
             <AddNewTaskForm
                 onAddTask={addTodoHandler}
             />
@@ -94,6 +115,8 @@ const TaskPage = () => {
                 onToggleTodoDone={toggleTodoDoneHandler}
                 onToggleTodoNotStarted={toggleTodoNotStartedHandler}
                 onToggleTodoClosed={toggleTodoClosedHandler}
+                onEditLinked={editLinked}
+                onEditBlocked={editBlocked}
             />
         </div>
     );

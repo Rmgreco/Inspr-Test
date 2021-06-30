@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import '../App.css';
 
+
 const AddNewTaskForm = ({ onAddTask }) => {
   const formik = useFormik({
     validateOnChange: false,
@@ -16,6 +17,7 @@ const AddNewTaskForm = ({ onAddTask }) => {
       image: '',
       labels: '',
       indicators: '',
+      linked:''
 
     },
     validationSchema: Yup
@@ -35,7 +37,7 @@ const AddNewTaskForm = ({ onAddTask }) => {
 
       ),
     onSubmit: (values, { resetForm }) => {
-      onAddTask(values.todo, values.description, values.priority,  values.deadline,
+      onAddTask(values.todo, values.description, values.priority, values.deadline,
         values.time_estimated, values.image, values.labels, values.indicators);
 
       resetForm();
@@ -116,7 +118,6 @@ const AddNewTaskForm = ({ onAddTask }) => {
         value={formik.values.indicators}
         autoComplete="off"
       />
-      
       <button type="submit" className="inputs">Submit</button>
     </form>
   )
