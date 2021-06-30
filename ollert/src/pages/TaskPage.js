@@ -11,10 +11,11 @@ import '../App.css';
 const TaskPage = () => {
     const pathname = window.location.pathname;
     const path = pathname.split('/')[2];
+    console.log(path);
     const [todoItems, setTodoItems] = useState(getFromLocalStorage(`${path}-task`) || [])
 
     const addTodoHandler = useCallback((todo, description, priority,
-        deadline, time_estimated, image, labels, indicators, path) => {
+        deadline, time_estimated, image, labels, indicators) => {
         let latestTodoItem = null
         if (todoItems.length === 1) {
             latestTodoItem = todoItems[0]
@@ -35,15 +36,16 @@ const TaskPage = () => {
                 time_estimated,
                 image,
                 labels,
-                indicators
+                indicators,
             },
             ...todoItems,
         ]
         setTodoItems(newTaskItems)
         saveInLocalStorage(`${path}-task`, newTaskItems)
+        console.log(newTaskItems)
     }, [todoItems])
 
-    const removeTodoHandler = useCallback((id, path) => {
+    const removeTodoHandler = useCallback((id) => {
         const newTaskItems = todoItems.filter(todoItem => todoItem.id !== id)
 
         setTodoItems(newTaskItems)
@@ -51,7 +53,7 @@ const TaskPage = () => {
         saveInLocalStorage(`${path}-task`, newTaskItems)
     }, [todoItems])
 
-    const toggleTodoDoneHandler = useCallback((id, path) => {
+    const toggleTodoDoneHandler = useCallback((id) => {
         const todo = todoItems.find(todoItem => todoItem.id === id)
         todo.isDone = !todo.isDone
 
@@ -60,7 +62,7 @@ const TaskPage = () => {
 
     }, [todoItems])
 
-    const toggleTodoNotStartedHandler = useCallback((id, path) => {
+    const toggleTodoNotStartedHandler = useCallback((id) => {
         const todo = todoItems.find(todoItem => todoItem.id === id)
         todo.notStarted = !todo.notStarted
 
@@ -69,12 +71,13 @@ const TaskPage = () => {
 
     }, [todoItems])
 
-    const toggleTodoClosedHandler = useCallback((id, path) => {
+    const toggleTodoClosedHandler = useCallback((id) => {
         const todo = todoItems.find(todoItem => todoItem.id === id)
         todo.closed = !todo.closed
 
         setTodoItems([...todoItems])
         saveInLocalStorage(`${path}-task`, todoItems)
+    
 
     }, [todoItems])
 
