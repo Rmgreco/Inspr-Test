@@ -4,7 +4,7 @@ import Header from '../components/header'
 import TodoTask from '../components/TodoTask';
 import AddNewTaskForm from '../components/AddNewTaskForm';
 
-import { getFromLocalStorage, saveInLocalStorage } from '../helpers'
+import { getFromLocalStorage, saveInLocalStorage } from '../localStorage'
 import '../App.css';
 
 

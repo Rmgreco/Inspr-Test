@@ -2,9 +2,24 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import '../App.css';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+  input: {
+    display: 'none',
+  },
+}));
 
 const AddNewTaskForm = ({ onAddTask }) => {
+  const classes = useStyles();
   const formik = useFormik({
     validateOnChange: false,
     validateOnBlur: false,
@@ -17,8 +32,7 @@ const AddNewTaskForm = ({ onAddTask }) => {
       image: '',
       labels: '',
       indicators: '',
-      linked:''
-
+      linked: ''
     },
     validationSchema: Yup
       .object()
@@ -45,80 +59,73 @@ const AddNewTaskForm = ({ onAddTask }) => {
   })
 
   return (
-    <form onSubmit={formik.handleSubmit} className="form">
-      <label className="label">Task:</label>
-      <input className="inputs"
-        id="todo"
+    <form onSubmit={formik.handleSubmit} className={classes.root} noValidate autoComplete="off">
+      <TextField 
+        id="outlined-basic todo"
+        label="Task"
+        variant="outlined"
         name="todo"
         type="text"
         onChange={formik.handleChange}
-        value={formik.values.todo}
-        autoComplete="off"
-      />
-      <label className="label">Description:</label>
-      <input className="inputs"
-        id="description"
+        value={formik.values.todo} />
+      <TextField 
+        id="outlined-basic description"
+        label="Description"
+        variant="outlined"
         name="description"
         type="text"
         onChange={formik.handleChange}
-        value={formik.values.description}
-        autoComplete="off"
-      />
-      <label className="label">Priority:</label>
-      <input className="inputs"
-        id="priority"
+        value={formik.values.description} />
+      <TextField 
+        id="outlined-basic priority"
+        label="Priority"
+        variant="outlined"
         name="priority"
         type="text"
         onChange={formik.handleChange}
-        value={formik.values.priority}
-        autoComplete="off"
-      />
-      <label className="label">Deadline:</label>
-      <input className="inputs"
-        id="deadline"
+        value={formik.values.priority} />
+      <TextField 
+        id="outlined-basic deadline"
+        label="Deadline"
+        variant="outlined"
         name="deadline"
         type="text"
         onChange={formik.handleChange}
-        value={formik.values.deadline}
-        autoComplete="off"
-      />
-      <label className="label">Time_estimated:</label>
-      <input className="inputs"
-        id="time_estimated"
+        value={formik.values.deadline} />
+      <TextField 
+        id="outlined-basic time_estimated"
+        label="Time estimated"
+        variant="outlined"
         name="time_estimated"
         type="text"
         onChange={formik.handleChange}
-        value={formik.values.time_estimated}
-        autoComplete="off"
-      />
-      <label className="label">Image:</label>
-      <input className="inputs"
-        id="image"
+        value={formik.values.time_estimated} />
+      <TextField 
+        accept="image/*"
+        id="outlined-basic image"
+        label=""
+        variant="outlined"
         name="image"
         type="file"
         onChange={formik.handleChange}
-        value={formik.values.image}
-        autoComplete="off"
-      />
-      <label className="label">Labels:</label>
-      <input className="inputs"
-        id="labels"
+        value={formik.values.image} />
+      <TextField 
+        id="outlined-basic labels"
+        label="labels"
+        variant="outlined"
         name="labels"
         type="text"
         onChange={formik.handleChange}
-        value={formik.values.labels}
-        autoComplete="off"
-      />
-      <label className="label">Indicators:</label>
-      <input className="inputs"
-        id="indicators"
+        value={formik.values.labels} />
+      <TextField 
+        id="outlined-basic indicators"
+        label="indicators"
+        variant="outlined"
         name="indicators"
         type="text"
         onChange={formik.handleChange}
-        value={formik.values.indicators}
-        autoComplete="off"
-      />
-      <button type="submit" className="inputs">Submit</button>
+        value={formik.values.indicators} />
+      <Button type="submit" className="inputs" variant="contained">Submit</Button>
     </form>
   )
 };

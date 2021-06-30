@@ -4,41 +4,41 @@ import Header from '../components/header'
 import TodoList from '../components/TodoList';
 import AddNewTodoForm from '../components/AddNewTodoForm';
 
-import { getFromLocalStorage, saveInLocalStorage } from '../helpers'
+import { getFromLocalStorage, saveInLocalStorage } from '../localStorage'
 import '../App.css';
 
 
 const ListPage = () => {
-  const [todoItems, setTodoItems] = useState(getFromLocalStorage('todo') || [])
+  const [todoItems, setList] = useState(getFromLocalStorage('todo') || [])
 
-  const addTodoHandler = useCallback(todo => {
+  const addList = useCallback(todo => {
     let latestTodoItem = null
     if (todoItems.length === 1) {
       latestTodoItem = todoItems[0]
     }
 
     else if (todoItems.length > 1) {
-      const todoItemsDescendingSortedById = todoItems.sort((a, b) => a.id > b.id)
-      latestTodoItem = todoItemsDescendingSortedById[0]
+      const list = todoItems.sort((a, b) => a.id > b.id)
+      latestTodoItem = list[0]
     }
 
-    const newTodoItems = [
+    const newList = [
       {
         id: latestTodoItem ? latestTodoItem.id + 1 : 0,
         todo,
       },
       ...todoItems,
     ]
-    setTodoItems(newTodoItems)
-    saveInLocalStorage('todo', newTodoItems)
+    setList(newList)
+    saveInLocalStorage('todo', newList)
   }, [todoItems]) 
 
-  const removeTodoHandler = useCallback(id => {
-    const newTodoItems = todoItems.filter(todoItem => todoItem.id !== id)
+  const removeList = useCallback(id => {
+    const newList = todoItems.filter(todoItem => todoItem.id !== id)
 
-    setTodoItems(newTodoItems)
+    setList(newList)
 
-    saveInLocalStorage('todo', newTodoItems)
+    saveInLocalStorage('todo', newList)
   }, [todoItems])
 
   return (
@@ -46,11 +46,11 @@ const ListPage = () => {
       <Header />
       <h1>Lists</h1>
       <AddNewTodoForm
-        onAddTodo={addTodoHandler} 
+        onAddTodo={addList} 
       />
       <TodoList
         todoItems={todoItems}
-        onRemoveTodo={removeTodoHandler}
+        onRemoveTodo={removeList}
       />
     </div>
   );
