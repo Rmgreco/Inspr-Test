@@ -16,7 +16,7 @@ const TaskPage = () => {
     const [todoItems, setTodoItems] = useState(getFromLocalStorage(`${path}-task`) || [])
 
     const addTodoHandler = useCallback((todo, description, priority,
-        deadline, time_estimated, image, labels, indicators, linked, blocked) => {
+        deadline, time_estimated, image, labels, indicators, linked, blocked, color) => {
         let latestTodoItem = null
         if (todoItems.length === 1) {
             latestTodoItem = todoItems[0]
@@ -39,7 +39,8 @@ const TaskPage = () => {
                 labels,
                 indicators,
                 linked,
-                blocked
+                blocked,
+                color
             },
             ...todoItems,
         ]
@@ -102,6 +103,15 @@ const TaskPage = () => {
     
       }, [todoItems])
 
+      const editColor = useCallback((id, color) => {
+        const editingColor = todoItems.find(todoItem => todoItem.id === id)
+        editingColor.color = color
+        setTodoItems([...todoItems])
+
+        saveInLocalStorage(`${path}-task`, todoItems)
+    
+      }, [todoItems])
+
     return (
         <div className="todo">
             <Header />
@@ -117,6 +127,7 @@ const TaskPage = () => {
                 onToggleTodoClosed={toggleTodoClosedHandler}
                 onEditLinked={editLinked}
                 onEditBlocked={editBlocked}
+                onEditColor={editColor}
             />
         </div>
     );

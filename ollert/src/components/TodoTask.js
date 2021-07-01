@@ -3,13 +3,14 @@ import React from 'react';
 import TodoItemTask from './TodoItemTask'
 import '../App.css';
 
-const TodoTask = ({ todoItems, onRemoveTodo, onToggleTodoDone, onToggleTodoNotStarted, onToggleTodoClosed, onEditLinked, onEditBlocked }) => (
+const TodoTask = ({ todoItems, onRemoveTodo, onToggleTodoDone, onToggleTodoNotStarted, 
+  onToggleTodoClosed, onEditLinked, onEditBlocked, onEditColor }) => (
   <ul >
     {
       todoItems && 
       Array.isArray(todoItems) && 
       todoItems.map(({ id, todo, description, priority,
-        deadline, time_estimated, image, labels, indicators, linked, isDone, notStarted, closed, blocked }) => ( 
+        deadline, time_estimated, image, labels, indicators, linked, isDone, notStarted, closed, blocked, color }) => ( 
         <TodoItemTask
           key={id}
           id={id}
@@ -32,6 +33,8 @@ const TodoTask = ({ todoItems, onRemoveTodo, onToggleTodoDone, onToggleTodoNotSt
           linked={linked}
           onEditBlocked={onEditBlocked}
           blocked={blocked}
+          onEditColor={onEditColor}
+          color={color}
         />
       ))
     }
