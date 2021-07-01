@@ -59,11 +59,11 @@ const TodoItemTask = ({ todo, id, onRemoveTodo, description, priority,
 
   return (
     <li className="li" >
-      <Card className={classes.root} style={{ backgroundColor: closed ? 'grey' : notStarted ? 'red' : 'lightgreen' }}>
+      <Card className={classes.root} style={{ backgroundColor: closed ? 'rgb(36, 33, 33)' : notStarted ? 'darkred' : 'darkgreen' }}>
         <CardContent>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
             <div id="dot" style={{ backgroundColor: color }}></div>
-            <p style={{ textDecoration: isDone ? 'line-through' : 'none' }}>{todo}</p>
+            <p class="name" style={{ textDecoration: isDone ? 'line-through' : 'none' }}>{todo}</p>
             <p style={{ textDecoration: isDone ? 'line-through' : 'none' }}>Description : {description}</p>
             <p style={{ textDecoration: isDone ? 'line-through' : 'none' }}>Priority : {priority}</p>
             <p style={{ textDecoration: isDone ? 'line-through' : 'none' }}>Deadline : {deadline}</p>

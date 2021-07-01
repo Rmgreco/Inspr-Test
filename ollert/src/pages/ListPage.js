@@ -42,9 +42,9 @@ const ListPage = () => {
   }, [todoItems])
 
   return (
-    <div className="todo">
+    <div className="list-page">
       <Header />
-      <h1>Lists</h1>
+      <h1 className="page-title">Lists</h1>
       <AddNewTodoForm
         onAddTodo={addList} 
       />

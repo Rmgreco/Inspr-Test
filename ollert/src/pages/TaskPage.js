@@ -7,6 +7,7 @@ import AddNewTaskForm from '../components/AddNewTaskForm';
 import { getFromLocalStorage, saveInLocalStorage } from '../localStorage'
 import '../App.css';
 
+import Button from '@material-ui/core/Button';
 
 const TaskPage = () => {
     const pathname = window.location.pathname;
@@ -115,7 +116,7 @@ const TaskPage = () => {
     return (
         <div className="todo">
             <Header />
-            <h1>{pathTitle} Tasks</h1>
+            <h1 className="page-title">{pathTitle} Tasks</h1>
             <AddNewTaskForm
                 onAddTask={addTodoHandler}
             />
